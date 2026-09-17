@@ -1,0 +1,1 @@
+import{z}from"zod";export const reviewSchema=z.object({bookingId:z.string().regex(/^[a-f\d]{24}$/i),rating:z.coerce.number().int().min(1).max(5),comment:z.preprocess(value=>typeof value==="string"&&value.trim()===""?undefined:value,z.string().trim().max(1000).optional())});

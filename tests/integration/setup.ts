@@ -1,0 +1,2 @@
+const uri=process.env.MONGODB_URI||"";if(!/integration[-_]?test/i.test(uri))throw new Error("Integration tests require an isolated MongoDB database whose name contains integration-test");
+Object.assign(process.env,{NODE_ENV:"test"});process.env.SESSION_SECRET||="integration-session-secret-at-least-32-characters";process.env.APP_URL||="http://localhost:3000";process.env.EMAIL_HOST||="smtp.integration.test";process.env.EMAIL_PORT||="587";process.env.EMAIL_USER||="integration";process.env.EMAIL_PASSWORD||="integration";process.env.EMAIL_FROM||="integration@example.test";

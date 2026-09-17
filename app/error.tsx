@@ -1,0 +1,1 @@
+"use client";import{RouteError}from"@/components/ui/route-error";export default function ErrorPage({reset}:{reset:()=>void}){return <main className="section container"><RouteError reset={reset}/></main>}

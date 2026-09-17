@@ -1,0 +1,3 @@
+"use server";import{revalidatePath}from"next/cache";import{requireTechnician}from"@/lib/permissions";import{submitRepairReport}from"./repair-submission.service";
+export type RepairSubmissionState={error?:string;success?:string};
+export async function submitRepairReportAction(bookingId:string,_state:RepairSubmissionState,_form:FormData):Promise<RepairSubmissionState>{const technician=await requireTechnician();try{await submitRepairReport(bookingId,technician.id)}catch(error){return{error:error instanceof Error?error.message:"Could not submit repair report"}}revalidatePath(`/technician/jobs/${bookingId}`);revalidatePath(`/dashboard/bookings/${bookingId}`);revalidatePath("/admin/bookings");return{success:"Repair report submitted for quality check"}}

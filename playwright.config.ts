@@ -1,0 +1,36 @@
+import { defineConfig, devices } from "@playwright/test";
+const database = "mongodb://127.0.0.1:27017/computer-maintenance-e2e-test",
+  baseURL = "http://127.0.0.1:3100";
+export default defineConfig({
+  testDir: "tests/e2e",
+  fullyParallel: false,
+  workers: 1,
+  retries: 0,
+  timeout: 120_000,
+  expect: { timeout: 30_000 },
+  globalSetup: "./tests/e2e/global-setup.ts",
+  globalTeardown: "./tests/e2e/global-teardown.ts",
+  use: { baseURL, trace: "retain-on-failure", screenshot: "only-on-failure" },
+  projects: [{ name: "chromium", use: { ...devices["Desktop Chrome"] } }],
+  webServer: {
+    command: "npm run build && mkdir -p .next/standalone/.next && cp -R .next/static .next/standalone/.next/static && HOSTNAME=127.0.0.1 PORT=3100 node .next/standalone/server.js",
+    url: baseURL,
+    reuseExistingServer: false,
+    timeout: 120_000,
+    env: {
+      NODE_ENV: "test",
+      ALLOW_INSECURE_LOCAL_E2E: "true",
+      MONGODB_URI: database,
+      SESSION_SECRET: "e2e-session-secret-at-least-thirty-two-characters",
+      APP_URL: baseURL,
+      EMAIL_HOST: "127.0.0.1",
+      EMAIL_PORT: "1",
+      EMAIL_USER: "e2e",
+      EMAIL_PASSWORD: "e2e",
+      EMAIL_FROM: "e2e@example.test",
+      CLOUDINARY_CLOUD_NAME: "e2e",
+      CLOUDINARY_API_KEY: "e2e",
+      CLOUDINARY_API_SECRET: "e2e",
+    },
+  },
+});

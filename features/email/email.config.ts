@@ -1,0 +1,2 @@
+export type EmailEnvironment={EMAIL_HOST:string;EMAIL_PORT:number;EMAIL_USER:string;EMAIL_PASSWORD:string;EMAIL_FROM:string;APP_URL:string};
+export function resolveEmailConfig(environment:EmailEnvironment){return{host:environment.EMAIL_HOST,port:environment.EMAIL_PORT,secure:environment.EMAIL_PORT===465,auth:{user:environment.EMAIL_USER,pass:environment.EMAIL_PASSWORD},from:environment.EMAIL_FROM,appUrl:environment.APP_URL.replace(/\/$/,"")}}

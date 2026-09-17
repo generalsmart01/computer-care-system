@@ -1,0 +1,4 @@
+import React from"react";import Link from"next/link";
+type Props={code?:string;title:string;message:string;actionHref?:string;actionLabel?:string;busy?:boolean};
+export function PageState({code,title,message,actionHref,actionLabel,busy=false}:Props){return <section className="page-state card" aria-live={busy?"polite":undefined} aria-busy={busy||undefined}>{code&&<p className="status">{code}</p>}<h1>{title}</h1><p className="muted">{message}</p>{actionHref&&actionLabel&&<Link className="btn" href={actionHref}>{actionLabel}</Link>}</section>}
+export function PageSkeleton(){return <section className="page-state card" aria-live="polite" aria-busy="true"><span className="skeleton skeleton-title"/><span className="skeleton skeleton-copy"/><span className="skeleton skeleton-copy short"/><span className="sr-only">Loading page</span></section>}

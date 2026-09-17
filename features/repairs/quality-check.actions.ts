@@ -1,0 +1,3 @@
+"use server";import{revalidatePath}from"next/cache";import{requireAdmin}from"@/lib/permissions";import{qualityCheck}from"./quality-check.service";
+export type QualityCheckState={error?:string;success?:string};
+export async function qualityCheckAction(bookingId:string,_state:QualityCheckState,form:FormData):Promise<QualityCheckState>{const admin=await requireAdmin();try{await qualityCheck(bookingId,admin.id,Object.fromEntries(form))}catch(error){return{error:error instanceof Error?error.message:"Could not record quality check"}}revalidatePath(`/admin/bookings/${bookingId}`);revalidatePath(`/technician/jobs/${bookingId}`);revalidatePath(`/dashboard/bookings/${bookingId}`);return{success:"Quality-check decision recorded"}}

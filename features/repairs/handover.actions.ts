@@ -1,0 +1,3 @@
+"use server";import{revalidatePath}from"next/cache";import{requireAdmin}from"@/lib/permissions";import{completeHandover}from"./handover.service";
+export type HandoverState={error?:string;success?:string};
+export async function completeHandoverAction(bookingId:string,_state:HandoverState,form:FormData):Promise<HandoverState>{const admin=await requireAdmin();try{await completeHandover(bookingId,admin.id,Object.fromEntries(form))}catch(error){return{error:error instanceof Error?error.message:"Could not complete handover"}}revalidatePath(`/admin/bookings/${bookingId}`);revalidatePath(`/dashboard/bookings/${bookingId}`);revalidatePath(`/technician/jobs/${bookingId}`);revalidatePath("/admin/technicians");return{success:"Device handover confirmed and booking completed"}}

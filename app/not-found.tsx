@@ -1,0 +1,1 @@
+import{PageState}from"@/components/ui/page-state";export default function NotFound(){return <main className="section container"><PageState code="404" title="Page not found" message="The page may have moved or the address may be incorrect." actionHref="/" actionLabel="Return home"/></main>}

@@ -1,0 +1,3 @@
+import"server-only";import{connectDB}from"@/lib/db";import{Notification}from"@/models/Notification";import{NotFoundError}from"@/lib/errors";
+export async function markNotificationRead(customerId:string,notificationId:string){await connectDB();const notification=await Notification.findOneAndUpdate({_id:notificationId,userId:customerId},{$set:{readAt:new Date()}},{new:true});if(!notification)throw new NotFoundError("Notification not found");return notification}
+export async function markAllNotificationsRead(customerId:string){await connectDB();return Notification.updateMany({userId:customerId,readAt:null},{$set:{readAt:new Date()}})}

@@ -1,0 +1,2 @@
+import{z}from"zod";
+export const handoverSchema=z.object({finalAmount:z.coerce.number().finite().nonnegative().max(10_000_000),amountNote:z.string().trim().max(500).optional(),recipientName:z.string().trim().min(2).max(120),handoverConfirmed:z.literal("on",{error:"Confirm that the customer or representative received the device"})}).refine(data=>data.finalAmount>0||Boolean(data.amountNote?.length),{path:["amountNote"],message:"Explain why this repair has no final charge"});

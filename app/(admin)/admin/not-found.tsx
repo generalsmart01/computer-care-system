@@ -1,0 +1,1 @@
+import{PageState}from"@/components/ui/page-state";export default function NotFound(){return <PageState code="404" title="Administration record not found" message="The requested record does not exist or is no longer available." actionHref="/admin" actionLabel="Return to administration"/>}

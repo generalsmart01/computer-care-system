@@ -1,0 +1,59 @@
+{
+  "name": "computer-maintenance-booking-system",
+  "version": "1.0.0",
+  "private": true,
+  "engines": {
+    "node": "22.x"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:integration": "MONGODB_URI=mongodb://127.0.0.1:27017/computer-maintenance-integration-test vitest run --config vitest.integration.config.ts",
+    "test:e2e": "npm run db:up && playwright test",
+    "smoke:production": "playwright test --config playwright.smoke.config.ts",
+    "docs:screenshots": "npm run db:up && CAPTURE_DOCUMENTATION=1 playwright test tests/e2e/successful-repair.spec.ts",
+    "test:watch": "vitest",
+    "db:up": "docker compose up -d --wait mongodb",
+    "db:status": "docker compose ps mongodb",
+    "db:logs": "docker compose logs mongodb",
+    "db:down": "docker compose down",
+    "seed": "tsx scripts/seed.ts",
+    "db:indexes": "tsx scripts/create-indexes.ts",
+    "create-admin": "tsx scripts/create-admin.ts",
+    "create-super-admin": "tsx scripts/create-admin.ts"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "jose": "^6.0.13",
+    "mongodb": "^7.6.0",
+    "mongoose": "^8.18.0",
+    "next": "^16.3.3",
+    "nodemailer": "^9.0.5",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "server-only": "^0.0.1",
+    "zod": "^4.1.5"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.62.1",
+    "@tailwindcss/postcss": "^4.1.13",
+    "@testing-library/jest-dom": "^6.8.0",
+    "@testing-library/react": "^16.3.0",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/node": "^22.18.0",
+    "@types/nodemailer": "^7.0.12",
+    "@types/react": "^19.1.12",
+    "@types/react-dom": "^19.1.9",
+    "eslint": "^9.35.0",
+    "eslint-config-next": "^16.3.3",
+    "jsdom": "^26.1.0",
+    "tailwindcss": "^4.1.13",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
+  }
+}

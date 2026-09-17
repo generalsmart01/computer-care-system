@@ -1,0 +1,3 @@
+import mongoose,{Schema} from "mongoose"; import { DEVICE_TYPES } from "@/lib/constants";
+const schema=new Schema({ownerId:{type:Schema.Types.ObjectId,ref:"User",required:true,index:true},type:{type:String,enum:DEVICE_TYPES,required:true},brand:{type:String,required:true},model:{type:String,required:true},serialNumber:{type:String,trim:true,unique:true,sparse:true},operatingSystem:String,processor:String,ram:String,storage:String,colour:String,notes:String,isActive:{type:Boolean,default:true}},{timestamps:true});
+export const Device:mongoose.Model<any>=mongoose.models.Device||mongoose.model("Device",schema);

@@ -1,0 +1,3 @@
+"use server";import{revalidatePath}from"next/cache";import{requireCustomer}from"@/lib/permissions";import{createReview}from"./review.service";
+export type ReviewState={error?:string;success?:string};
+export async function createReviewAction(bookingId:string,_state:ReviewState,form:FormData):Promise<ReviewState>{const user=await requireCustomer();try{await createReview(user.id,{...Object.fromEntries(form),bookingId})}catch(error){return{error:error instanceof Error?error.message:"Could not submit review"}}revalidatePath(`/dashboard/bookings/${bookingId}`);return{success:"Thank you. Your review was submitted."}}

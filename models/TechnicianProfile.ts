@@ -1,0 +1,3 @@
+import mongoose,{Schema} from "mongoose";import { TECHNICIAN_AVAILABILITY } from "@/lib/constants";
+const schema=new Schema({userId:{type:Schema.Types.ObjectId,ref:"User",required:true,unique:true},employeeNumber:{type:String,required:true,unique:true,trim:true,uppercase:true},specializations:[{type:String,trim:true}],yearsOfExperience:{type:Number,min:0},availabilityStatus:{type:String,enum:TECHNICIAN_AVAILABILITY,default:"AVAILABLE",index:true},activeJobCount:{type:Number,default:0,min:0},maximumActiveJobs:{type:Number,default:5,min:1},bio:{type:String,trim:true}},{timestamps:true});schema.index({specializations:1});
+export const TechnicianProfile:mongoose.Model<any>=mongoose.models.TechnicianProfile||mongoose.model("TechnicianProfile",schema);

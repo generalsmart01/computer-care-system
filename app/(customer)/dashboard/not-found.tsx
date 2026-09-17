@@ -1,0 +1,1 @@
+import{PageState}from"@/components/ui/page-state";export default function NotFound(){return <PageState code="404" title="Dashboard item not found" message="It may have been removed or may not belong to your account." actionHref="/dashboard" actionLabel="Return to dashboard"/>}

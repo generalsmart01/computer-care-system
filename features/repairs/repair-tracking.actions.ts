@@ -1,0 +1,3 @@
+"use server";import{revalidatePath}from"next/cache";import{requireTechnician}from"@/lib/permissions";import{saveRepairTracking}from"./repair-tracking.service";
+export type RepairTrackingState={error?:string;success?:string};
+export async function saveRepairTrackingAction(bookingId:string,_state:RepairTrackingState,form:FormData):Promise<RepairTrackingState>{const technician=await requireTechnician();try{await saveRepairTracking(bookingId,technician.id,Object.fromEntries(form))}catch(error){return{error:error instanceof Error?error.message:"Could not save repair progress"}}revalidatePath(`/technician/jobs/${bookingId}`);return{success:"Repair progress saved"}}

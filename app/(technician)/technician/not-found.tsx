@@ -1,0 +1,1 @@
+import{PageState}from"@/components/ui/page-state";export default function NotFound(){return <PageState code="404" title="Technician job not found" message="This job may have been reassigned or is no longer available to you." actionHref="/technician/jobs" actionLabel="Return to jobs"/>}

@@ -1,0 +1,3 @@
+import mongoose,{Schema} from "mongoose"; import { ASSIGNMENT_STATUSES } from "@/lib/constants";
+const schema=new Schema({bookingId:{type:Schema.Types.ObjectId,ref:"Booking",required:true},technicianId:{type:Schema.Types.ObjectId,ref:"User",required:true},assignedBy:{type:Schema.Types.ObjectId,ref:"User",required:true},assignedAt:{type:Date,default:Date.now},acceptedAt:Date,endedAt:Date,status:{type:String,enum:ASSIGNMENT_STATUSES,default:"ACTIVE"},note:String},{timestamps:true});schema.index({bookingId:1,status:1},{unique:true,partialFilterExpression:{status:"ACTIVE"}});schema.index({technicianId:1,status:1});
+export const Assignment:mongoose.Model<any>=mongoose.models.Assignment||mongoose.model("Assignment",schema);

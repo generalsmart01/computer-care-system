@@ -1,0 +1,9 @@
+"use server";
+import { revalidatePath } from "next/cache";
+import { requireAdmin, requireTechnician } from "@/lib/permissions";
+import { requestDiagnosisRevision, saveDiagnosisDraft, startDiagnosis, submitDiagnosis } from "./diagnosis.service";
+
+export type DiagnosisActionState={error?:string;success?:string};
+export async function startDiagnosisAction(bookingId:string,_state:DiagnosisActionState,_form:FormData):Promise<DiagnosisActionState>{const technician=await requireTechnician();try{await startDiagnosis(bookingId,technician.id)}catch(error){return{error:error instanceof Error?error.message:"Could not start diagnosis"}}revalidatePath(`/technician/jobs/${bookingId}`);return{success:"Diagnosis started"}}
+export async function diagnosisFormAction(bookingId:string,_state:DiagnosisActionState,form:FormData):Promise<DiagnosisActionState>{const technician=await requireTechnician(),input=Object.fromEntries(form),intent=String(form.get("intent")||"draft");try{if(intent==="submit")await submitDiagnosis(bookingId,technician.id,input);else await saveDiagnosisDraft(bookingId,technician.id,input)}catch(error){return{error:error instanceof Error?error.message:"Could not save diagnosis"}}revalidatePath(`/technician/jobs/${bookingId}`);return{success:intent==="submit"?"Diagnosis submitted":"Draft saved"}}
+export async function requestDiagnosisRevisionAction(bookingId:string,_state:DiagnosisActionState,form:FormData):Promise<DiagnosisActionState>{const admin=await requireAdmin();try{await requestDiagnosisRevision(bookingId,admin.id,{reason:form.get("reason")})}catch(error){return{error:error instanceof Error?error.message:"Could not request diagnosis revision"}}revalidatePath(`/admin/bookings/${bookingId}`);revalidatePath(`/technician/jobs/${bookingId}`);revalidatePath(`/dashboard/bookings/${bookingId}`);return{success:"Diagnosis revision requested"}}
