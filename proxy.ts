@@ -13,7 +13,12 @@ const requiredRole = (pathname: string): UserRole =>
 export function proxy(req: NextRequest) {
   const token = req.cookies.get("cmb_session")?.value,
     login = () => {
-      const url = new URL("/login", req.url);
+      const loginPath = req.nextUrl.pathname.startsWith("/admin")
+        ? "/login/admin"
+        : req.nextUrl.pathname.startsWith("/technician")
+          ? "/login/technician"
+          : "/login";
+      const url = new URL(loginPath, req.url);
       url.searchParams.set("next", req.nextUrl.pathname);
       return NextResponse.redirect(url);
     };

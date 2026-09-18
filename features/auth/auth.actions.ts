@@ -18,20 +18,21 @@ export async function loginAction(
   _s: ActionState,
   form: FormData,
 ): Promise<ActionState> {
-  let role;
+  return signIn(form, ["CUSTOMER"], "/dashboard");
+}
+async function signIn(form: FormData, roles: string[], destination: string): Promise<ActionState> {
   try {
-    const result = await auth.login(Object.fromEntries(form));
-    role = result.role;
+    await auth.login(Object.fromEntries(form), roles);
   } catch (e) {
     return { error: e instanceof Error ? e.message : "Login failed" };
   }
-  redirect(
-    role === "ADMIN" || role === "SUPER_ADMIN"
-      ? "/admin"
-      : role === "TECHNICIAN"
-        ? "/technician"
-        : "/dashboard",
-  );
+  redirect(destination);
+}
+export async function adminLoginAction(_s: ActionState, form: FormData): Promise<ActionState> {
+  return signIn(form, ["ADMIN", "SUPER_ADMIN"], "/admin");
+}
+export async function technicianLoginAction(_s: ActionState, form: FormData): Promise<ActionState> {
+  return signIn(form, ["TECHNICIAN"], "/technician");
 }
 export async function resendVerificationAction(
   _s: ActionState,
@@ -79,7 +80,7 @@ export async function technicianOnboardingAction(
       error: e instanceof Error ? e.message : "Unable to complete onboarding",
     };
   }
-  redirect("/login?onboardingComplete=1");
+  redirect("/login/technician?onboardingComplete=1");
 }
 export async function administratorOnboardingAction(
   _s: ActionState,
@@ -94,7 +95,7 @@ export async function administratorOnboardingAction(
       error: e instanceof Error ? e.message : "Unable to complete onboarding",
     };
   }
-  redirect("/login?onboardingComplete=1");
+  redirect("/login/admin?onboardingComplete=1");
 }
 export async function logoutAction() {
   await auth.logout();

@@ -2378,6 +2378,8 @@ td {
   gap: 0.65rem;
   padding: 0.85rem 0.65rem;
   border-top: 1px solid #ffffff14;
+  position: absolute;
+  bottom: 20px;
 }
 .avatar {
   display: grid;
@@ -2445,9 +2447,8 @@ td {
   min-height: 82px;
   padding: 1rem clamp(1.2rem, 3vw, 2.5rem);
   border-bottom: 1px solid #dfe5ec;
-  background: #ffffffed;
+  background: #fff;
   box-shadow: 0 4px 18px #14213d08;
-  backdrop-filter: blur(12px);
 }
 .dashboard-header h2 {
   margin: 0;
@@ -2557,6 +2558,7 @@ td {
     display: flex;
     flex-direction: column;
     width: min(310px, 86vw);
+    height: 100dvh;
     padding: 1.2rem 1rem;
     background: var(--sidebar);
     color: white;
@@ -2565,10 +2567,33 @@ td {
   }
   .mobile-drawer .dashboard-brand {
     margin-bottom: 1rem;
+    padding-right: 2.75rem;
   }
-  .mobile-drawer nav {
+  .mobile-drawer-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 1px solid #ffffff33;
+    border-radius: 0.65rem;
+    background: #ffffff14;
+    color: white;
+    cursor: pointer;
+  }
+  .mobile-drawer-close:hover,
+  .mobile-drawer-close:focus-visible {
+    background: #ffffff29;
+  }
+  .mobile-drawer-close svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+  /* .mobile-drawer nav {
     flex: 1;
-  }
+  } */
   .mobile-drawer .dashboard-account {
     margin-top: 1.5rem;
   }
@@ -3261,6 +3286,37 @@ html {
 }
 .profile-note p {
   margin: 0.3rem 0 0;
+}
+.technician-availability-form {
+  margin: 0 1.5rem 1.5rem;
+  padding: 1.25rem;
+  border: 1px solid #dbe6e9;
+  border-radius: 0.85rem;
+  background: #f7fbfb;
+}
+.technician-availability-form label {
+  display: block;
+  color: #172f3c;
+  font-weight: 800;
+}
+.technician-availability-form > p {
+  margin: 0.35rem 0 0.9rem;
+  color: #607283;
+  font-size: 0.85rem;
+}
+.technician-availability-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+.technician-availability-controls select {
+  flex: 1 1 220px;
+  min-height: 2.75rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #cbd9df;
+  border-radius: 0.55rem;
+  background: white;
+  color: #172f3c;
 }
 .capacity-track {
   height: 0.45rem;

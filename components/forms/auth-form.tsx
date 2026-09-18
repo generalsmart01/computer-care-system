@@ -2,13 +2,15 @@
 import { useActionState } from "react";
 import {
   loginAction,
+  adminLoginAction,
+  technicianLoginAction,
   registerAction,
   type ActionState,
 } from "@/features/auth/auth.actions";
 import { PasswordInput } from "./password-input";
 
-export function AuthForm({ mode }: { mode: "login" | "register" }) {
-  const action = mode === "login" ? loginAction : registerAction;
+export function AuthForm({ mode, portal = "customer" }: { mode: "login" | "register"; portal?: "customer" | "admin" | "technician" }) {
+  const action = mode === "register" ? registerAction : portal === "admin" ? adminLoginAction : portal === "technician" ? technicianLoginAction : loginAction;
   const [state, formAction, pending] = useActionState(
     action,
     {} as ActionState,

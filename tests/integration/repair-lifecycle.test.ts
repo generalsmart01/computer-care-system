@@ -346,7 +346,7 @@ describe.sequential("database-backed repair lifecycle", () => {
       login({
         email: "tech.integration@example.test",
         password: "ValidPass123",
-      }),
+      }, ["TECHNICIAN"]),
     ).rejects.toThrow(/invitation/i);
     await completeTechnicianInvitation({
       token,
@@ -357,13 +357,13 @@ describe.sequential("database-backed repair lifecycle", () => {
       login({
         email: "tech.integration@example.test",
         password: "ValidPass123",
-      }),
+      }, ["TECHNICIAN"]),
     ).rejects.toThrow();
     await expect(
       login({
         email: "tech.integration@example.test",
         password: "TechnicianPass456",
-      }),
+      }, ["TECHNICIAN"]),
     ).resolves.toMatchObject({ role: "TECHNICIAN" });
     expect(
       await User.exists({

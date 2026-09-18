@@ -31,7 +31,7 @@ async function capture(page: Page, name: string) {
 async function login(browser: Browser, email: string, path: string) {
   const context = await browser.newContext(),
     page = await context.newPage();
-  await page.goto("/login");
+  await page.goto(path === "/admin" ? "/login/admin" : path === "/technician" ? "/login/technician" : "/login");
   await page.getByLabel("Email").fill(email);
   await page.getByLabel("Password").fill(PASSWORD);
   await page.getByRole("button", { name: "Log in" }).click();

@@ -14,7 +14,7 @@ export default async function Page({
     <main className="auth-page">
       <div className="auth-card">
         <p className="auth-page-kicker">Welcome back</p>
-        <h1>Log in to your account</h1>
+        <h1>Customer login</h1>
         <p className="auth-page-description">
           Pick up where you left off with your bookings, repairs, and updates.
         </p>

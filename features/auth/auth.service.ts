@@ -37,7 +37,7 @@ export async function register(input: unknown) {
   }
   return { id: user.id, email: user.email };
 }
-export async function login(input: unknown) {
+export async function login(input: unknown, allowedRoles: readonly string[] = ["CUSTOMER"]) {
   const data = loginSchema.parse(input);
   await connectDB();
   const user = await User.findOne({ email: data.email }).select(
@@ -46,6 +46,8 @@ export async function login(input: unknown) {
   const valid =
     user && (await bcrypt.compare(data.password, user.passwordHash));
   if (!valid || user.status !== "ACTIVE")
+    throw new AuthenticationError("Invalid email or password");
+  if (!allowedRoles.includes(user.role))
     throw new AuthenticationError("Invalid email or password");
   if (user.role === "CUSTOMER" && !user.emailVerifiedAt)
     throw new AuthenticationError(
