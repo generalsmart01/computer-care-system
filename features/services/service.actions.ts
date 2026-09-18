@@ -7,7 +7,7 @@ import { createService, setServiceActive, updateService } from "./service.servic
 export type ServiceActionState = { error?: string };
 
 function values(form: FormData) {
-  return Object.fromEntries(form.entries());
+  return { ...Object.fromEntries(form.entries()), supportedDeviceTypes: form.getAll("supportedDeviceTypes") };
 }
 
 export async function createServiceAction(_state: ServiceActionState, form: FormData): Promise<ServiceActionState> {

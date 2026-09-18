@@ -21,7 +21,7 @@ export const BOOKING_STATUSES = [
   "CANCELLED",
   "REJECTED",
 ] as const;
-export const DEVICE_TYPES = ["LAPTOP", "DESKTOP", "TABLET", "OTHER"] as const;
+export const DEVICE_TYPES = ["LAPTOP", "DESKTOP", "TABLET", "PHONE", "OTHER"] as const;
 export const SERVICE_CATEGORIES = [
   "HARDWARE_REPAIR",
   "HARDWARE_DIAGNOSTICS",

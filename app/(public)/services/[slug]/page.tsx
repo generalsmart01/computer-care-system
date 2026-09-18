@@ -3,6 +3,7 @@ import { connectDB } from "@/lib/db";
 import { Service } from "@/models/Service";
 import { notFound } from "next/navigation";
 import { formatCurrency } from "@/lib/presentation";
+export const dynamic = "force-dynamic";
 export default async function Page({
   params,
 }: {
@@ -23,6 +24,7 @@ export default async function Page({
           </p>
           <h1>{service.name}</h1>
           <p>{service.shortDescription}</p>
+          {!!service.supportedDeviceTypes?.length && <p className="service-device-label">For {service.supportedDeviceTypes.map((type: string) => type.toLowerCase()).join(", ")}</p>}
         </div>
       </section>
       <section className="section container service-detail">
@@ -60,7 +62,7 @@ export default async function Page({
               ? "Customer quotation approval required"
               : "Fixed-price approval bypass supported"}
           </p>
-          <Link className="btn" href="/register">
+          <Link className="btn" href={`/dashboard/bookings/new?service=${service.slug}`}>
             Book this service
           </Link>
           <Link className="text-link" href="/services">

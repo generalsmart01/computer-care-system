@@ -4,33 +4,39 @@ import { Service } from "@/models/Service";
 import { Review } from "@/models/Review";
 import { FAQS, PROCESS_STEPS, TRUST_REASONS } from "@/lib/public-content";
 import { formatCurrency } from "@/lib/presentation";
+export const dynamic = "force-dynamic";
 export default async function Home() {
   let services: any[] = [],
     reviews: any[] = [];
   try {
     await connectDB();
     [services, reviews] = await Promise.all([
-      Service.find({ isActive: true }).sort({ name: 1 }).limit(6).lean(),
+      Service.find({ isActive: true }).sort({ name: 1 }).lean(),
       Review.find({ isHidden: false, comment: { $nin: [null, ""] } })
         .sort({ createdAt: -1 })
         .limit(3)
         .lean(),
     ]);
   } catch {}
+  const featuredServices = ["LAPTOP", "TABLET", "PHONE"]
+    .flatMap(type => services.filter(service => service.supportedDeviceTypes?.includes(type)).slice(0, 2))
+    .filter((service, index, all) => all.findIndex(other => String(other._id) === String(service._id)) === index)
+    .slice(0, 6);
+  if (!featuredServices.length) featuredServices.push(...services.slice(0, 6));
   return (
     <main>
       <section className="hero">
         <div className="container hero-grid">
           <div>
-            <p className="eyebrow">Computer repair, made accountable</p>
-            <h1>Know what is happening to your computer.</h1>
+            <p className="eyebrow">Device care, made accountable</p>
+            <h1>Know what is happening to your computer, tablet, or phone.</h1>
             <p className="hero-copy">
               From diagnosis to quotation, repair, quality check, and
               handover—ComputerCare keeps every decision clear and every
               milestone visible.
             </p>
             <div className="button-row">
-              <Link className="btn accent" href="/register">
+              <Link className="btn accent" href="/dashboard/bookings/new">
                 Start a booking
               </Link>
               <Link className="btn ghost" href="/services">
@@ -75,9 +81,9 @@ export default async function Home() {
           </div>
           <Link href="/services">View every service →</Link>
         </div>
-        {services.length ? (
+        {featuredServices.length ? (
           <div className="grid service-grid">
-            {services.map((service: any) => (
+            {featuredServices.map((service: any) => (
               <Link
                 className="card service-card"
                 href={`/services/${service.slug}`}

@@ -47,6 +47,7 @@ export default async function Page() {
               </Link>
             </h2>
             <p>{service.shortDescription}</p>
+            <p className="service-device-label">{service.supportedDeviceTypes?.length ? `For ${service.supportedDeviceTypes.map((type: string) => type.toLowerCase()).join(", ")}` : "All supported devices"}</p>
             <strong className="service-price">
               {formatCurrency(service.basePrice)}
               <small> base price</small>

@@ -7,8 +7,9 @@ describe("device validation", () => {
       .toEqual({ type: "LAPTOP", brand: "Lenovo", model: "T14", serialNumber: undefined });
   });
 
-  it("requires a supported device type", () => {
-    expect(deviceSchema.safeParse({ type: "PHONE", brand: "Apple", model: "15" }).success).toBe(false);
+  it("accepts phones and rejects unsupported device types", () => {
+    expect(deviceSchema.safeParse({ type: "PHONE", brand: "Apple", model: "15" }).success).toBe(true);
+    expect(deviceSchema.safeParse({ type: "CAR", brand: "Toyota", model: "Camry" }).success).toBe(false);
   });
 
   it("rejects oversized notes", () => {

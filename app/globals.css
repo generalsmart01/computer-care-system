@@ -1708,6 +1708,28 @@ body {
 .service-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
+.service-group + .service-group {
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+}
+.service-group .section-heading {
+  margin-bottom: 1.25rem;
+}
+.service-device-label {
+  color: #087e8b;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+.service-device-types {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  margin-top: 0.75rem;
+}
+.service-device-types label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
 .service-card {
   display: flex;
   flex-direction: column;

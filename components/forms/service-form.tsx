@@ -1,6 +1,6 @@
 "use client";
 import { useActionState } from "react";
-import { SERVICE_CATEGORIES } from "@/lib/constants";
+import { DEVICE_TYPES, SERVICE_CATEGORIES } from "@/lib/constants";
 import {
   createServiceAction,
   updateServiceAction,
@@ -12,6 +12,7 @@ type ServiceDefaults = {
   name: string;
   slug: string;
   category: string;
+  supportedDeviceTypes?: string[];
   shortDescription: string;
   description: string;
   basePrice: number;
@@ -58,6 +59,16 @@ export function ServiceForm({ service }: { service?: ServiceDefaults }) {
           ))}
         </select>
       </label>
+      <fieldset>
+        <legend>Supported devices</legend>
+        <p className="muted">Choose the devices this service can be booked for. Leave all unchecked for a general service.</p>
+        <div className="service-device-types">
+          {DEVICE_TYPES.map(type => <label key={type}>
+            <input type="checkbox" name="supportedDeviceTypes" value={type} defaultChecked={service?.supportedDeviceTypes?.includes(type)} />
+            {type.charAt(0) + type.slice(1).toLowerCase()}
+          </label>)}
+        </div>
+      </fieldset>
       <label>
         Short description
         <textarea
@@ -85,7 +96,7 @@ export function ServiceForm({ service }: { service?: ServiceDefaults }) {
           name="basePrice"
           type="number"
           required
-          min="0"
+          min="10000"
           max="10000000"
           step="0.01"
           defaultValue={service?.basePrice}

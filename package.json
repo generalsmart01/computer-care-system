@@ -22,6 +22,7 @@
     "db:logs": "docker compose logs mongodb",
     "db:down": "docker compose down",
     "seed": "tsx scripts/seed.ts",
+    "seed:services": "tsx scripts/seed-services.ts",
     "db:indexes": "tsx scripts/create-indexes.ts",
     "create-admin": "tsx scripts/create-admin.ts",
     "create-super-admin": "tsx scripts/create-admin.ts"

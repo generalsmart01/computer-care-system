@@ -20,6 +20,7 @@ export default async function Page({ params }: { params: Promise<{ serviceId: st
       name: service.name,
       slug: service.slug,
       category: service.category,
+      supportedDeviceTypes: service.supportedDeviceTypes || [],
       shortDescription: service.shortDescription,
       description: service.description,
       basePrice: service.basePrice,
